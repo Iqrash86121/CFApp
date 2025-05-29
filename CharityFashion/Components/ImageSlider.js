@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Dimensions, Image, StyleSheet, ScrollView, Animated, TouchableOpacity } from 'react-native';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -7,11 +7,12 @@ const ImageSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef();
+  const intervalRef = useRef();
 
   const sliderImages = [
-    { id: 1, image: require('../Assets/Our.png') },
-    { id: 2, image: require('../Assets/Our.png') },
-    { id: 3, image: require('../Assets/Our.png') },
+    { id: 1, image: require('../Assets/our.png') },
+    { id: 2, image: require('../Assets/offers.png') },
+    { id: 3, image: require('../Assets/Details.png') },
   ];
 
   const handleScroll = Animated.event(
@@ -26,11 +27,35 @@ const ImageSlider = () => {
   };
 
   const goToSlide = (index) => {
+    // Reset the interval when user manually changes slide
+    resetInterval();
+    
     scrollRef.current?.scrollTo({
       x: index * screenWidth,
       animated: true,
     });
   };
+
+  const startInterval = () => {
+    intervalRef.current = setInterval(() => {
+      const nextIndex = (currentIndex + 1) % sliderImages.length;
+      goToSlide(nextIndex);
+    }, 2000); // Change slide every 2 seconds
+  };
+
+  const resetInterval = () => {
+    clearInterval(intervalRef.current);
+    startInterval();
+  };
+
+  useEffect(() => {
+    startInterval();
+    
+    // Clean up interval on component unmount
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, [currentIndex]); // Restart interval when currentIndex changes
 
   return (
     <View style={styles.container}>

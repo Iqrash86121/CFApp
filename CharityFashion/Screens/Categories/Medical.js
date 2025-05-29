@@ -2,35 +2,49 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 
 const Medical = ({ navigation }) => {
-  // Medical uniform products data
+  // Medical uniform products data with inline image requires
   const products = [
     { 
       id: 1, 
       name: 'Medical Scrubs Set', 
-      price: 49.99, 
-      description: 'Professional medical scrubs with antimicrobial treatment. Comfortable stretch fabric with multiple pockets.',
-      image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&auto=format&fit=crop' 
+      price: 524, 
+      description: 'Professional medical scrubs with multiple pockets.',
+      image: require('../../Assets/scrub.png')
     },
     { 
       id: 2, 
-      name: 'Lab Coat', 
-      price: 59.99, 
-      description: 'White medical lab coat with premium fabric and multiple functional pockets.',
-      image: 'https://images.unsplash.com/photo-1581595219315-a187dd40c322?w=500&auto=format&fit=crop' 
+      name: 'Medical Uniform', 
+      price: 741.3, 
+      description: 'Premium medical scrubs set featuring antimicrobial fabric treatment for hygiene and odor resistance. The breathable, stretchable material provides all-day comfort during long shifts. Includes multiple functional pockets for medical tools and devices. Wrinkle-resistant design maintains a professional appearance. Available in various sizes and colors to suit your workplace requirements. Ideal for doctors, nurses, and healthcare professionals seeking both comfort and functionality.',
+      image: require('../../Assets/Hospitalwear.png')
     },
     { 
       id: 3, 
-      name: 'Nursing Shoes', 
-      price: 79.99, 
-      description: 'Comfortable nursing shoes with slip-resistant soles for long shifts.',
-      image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop' 
+      name: '5 pockets trousers', 
+      price: 516.23, 
+      description: 'Versatile work trousers featuring five functional pockets for maximum utility.',
+      image: require('../../Assets/pocket.png')
     },
     { 
       id: 4, 
-      name: 'Surgical Mask', 
-      price: 9.99, 
-      description: '3-ply disposable surgical masks, box of 50 pieces.',
-      image: 'https://images.unsplash.com/photo-1584634731339-252c58ab7454?w=500&auto=format&fit=crop' 
+      name: 'Scrubs (TOP AND TROUSER)', 
+      price: 524.23, 
+      description: 'Professional medical scrubs with multiple pockets.',
+      image: require('../../Assets/PPE.png')
+    },
+    { 
+      id: 5, 
+      name: 'Golf t-shirt', 
+      price: 270.50, 
+      description: 'High-performance golf t-shirt',
+      image: require('../../Assets/golf.png')
+    },
+    { 
+      id: 6, 
+      name: 'Ambulance Respond Wear', 
+      price: 741, 
+      description: 'Professional protective ambulance respond wear. ',
+      image: require('../../Assets/amb.png')
     },
   ];
 
@@ -40,7 +54,7 @@ const Medical = ({ navigation }) => {
       onPress={() => navigation.navigate('ProductDetailScreen', { product: item })}
     >
       <Image 
-        source={{ uri: item.image }} 
+        source={item.image} 
         style={styles.productImage}
         resizeMode="cover"
       />
@@ -74,12 +88,11 @@ const Medical = ({ navigation }) => {
       <View style={styles.footer}>
         <Text style={styles.footerContact}>Contact Us:</Text>
         <Text style={styles.footerNumber}>+264 812200730</Text>
-        <Text style={styles.footerEmail}>charityfashioncc@gmail.com</Text>
+        <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
       </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

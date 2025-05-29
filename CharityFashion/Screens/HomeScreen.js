@@ -11,7 +11,7 @@ export default function HomeScreen({ navigation }) {
           source={require('../Assets/Logo.png')} // Replace with your actual logo path
           style={styles.logo}
         />
-        <Text style={styles.companyName}>Charity Fashion</Text>
+        <Text style={styles.companyName}>CFASHION.NA</Text>
       </View>
 
       {/* Image Slider */}
@@ -23,7 +23,7 @@ export default function HomeScreen({ navigation }) {
           style={[styles.button, styles.productsButton]}
           onPress={() => navigation.navigate('OutfitsCategories')}
         >
-          <Text style={styles.buttonText}>Fashion Outfits and Accessories</Text>
+          <Text style={styles.buttonText}>Fashion Design and Accessories</Text>
         </TouchableOpacity>
 
         <View style={styles.buttonSpacer} />
@@ -42,7 +42,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.footerText}>P.o box 2888 ,Smarties, Okahandja</Text>
         <Text style={styles.footerContact}>Contact Us:</Text>
         <Text style={styles.footerNumber}>+264 812200730</Text>
-        <Text style={styles.footerEmail}>charityfashioncc@gmail.com</Text>
+        <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
       </View>
     </View>
   )

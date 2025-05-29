@@ -2,51 +2,97 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 
 const PDesign = ({ navigation }) => {
-  // Medical uniform products data
   const products = [
     { 
       id: 1, 
-      name: 'Medical Scrubs Set', 
-      price: 49.99, 
-      description: 'Professional medical scrubs with antimicrobial treatment. Comfortable stretch fabric with multiple pockets.',
-      image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&auto=format&fit=crop' 
+      name: 'African Head cover', 
+      price: 100, 
+      description: 'Stylish and durable head cover made from high-quality African fabrics.',
+      image: require('../../Assets/5.png'),
+      type: 'accessory'
     },
     { 
       id: 2, 
-      name: 'Lab Coat', 
-      price: 59.99, 
-      description: 'White medical lab coat with premium fabric and multiple functional pockets.',
-      image: 'https://images.unsplash.com/photo-1581595219315-a187dd40c322?w=500&auto=format&fit=crop' 
+      name: 'Plain Bonnet', 
+      price: 80, 
+      description: 'Stylish and durable head cover bonnet made from premium materials.',
+      image: require('../../Assets/4.png'),
+      type: 'accessory'
     },
     { 
       id: 3, 
-      name: 'Nursing Shoes', 
-      price: 79.99, 
-      description: 'Comfortable nursing shoes with slip-resistant soles for long shifts.',
-      image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop' 
+      name: 'Tote Bag', 
+      sizes: [
+        { size: 'Large', price: 380 },
+        { size: 'Medium', price: 250 },
+        { size: 'Mini', price: 180 }
+      ],
+      description: 'Stylish and durable tote bag made from high-quality materials. Available in three sizes to suit different needs.',
+      image: require('../../Assets/p2.png'),
+      type: 'bag'
     },
+    
     { 
       id: 4, 
-      name: 'Surgical Mask', 
-      price: 9.99, 
-      description: '3-ply disposable surgical masks, box of 50 pieces.',
-      image: 'https://images.unsplash.com/photo-1584634731339-252c58ab7454?w=500&auto=format&fit=crop' 
+      name: 'Medical Jump Bags', 
+      price:995.00,
+      description: 'Professional medical bags with multiple compartments. Available in three sizes for different medical supply needs.',
+      image: require('../../Assets/pd.png'),
+      type: 'accessory'
     },
+    { 
+      id: 5, 
+      name: 'Accessories Shopping Bag', 
+       sizes: [
+        { size: 'Large', price: 380 },
+        { size: 'Medium', price: 250 },
+        { size: 'Mini', price: 180 }
+      ],
+      description: 'Fashionable shopping bag with accessory compartments. Three sizes available for different shopping needs.',
+      image: require('../../Assets/bag.png'),
+      type: 'bag'
+    },
+    { 
+      id: 6, 
+      name: 'Elegant Evening Bag', 
+     sizes: [
+        { size: 'Large', price: 380 },
+        { size: 'Medium', price: 250 },
+        { size: 'Mini', price: 180 }
+      ],
+      description: 'Chic evening bag for special occasions. Available in medium and mini sizes.',
+      image: require('../../Assets/p3.png'),
+      type: 'bag'
+    },
+    
   ];
 
   const renderProductItem = ({ item }) => (
     <TouchableOpacity 
       style={styles.productItem}
-      onPress={() => navigation.navigate('ProductDetailScreen', { product: item })}
+      onPress={() => navigation.navigate('AccDetailsScreen', { product: item })}
     >
       <Image 
-        source={{ uri: item.image }} 
+        source={item.image} 
         style={styles.productImage}
         resizeMode="cover"
       />
       <View style={styles.productInfo}>
         <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productPrice}>N${item.price.toFixed(2)}</Text>
+        
+        {item.sizes ? (
+          <View style={styles.sizeContainer}>
+            {item.sizes.map((size, index) => (
+              <View key={index} style={styles.sizeOption}>
+                <Text style={styles.sizeLabel}>{size.size}:</Text>
+                <Text style={styles.sizePrice}>N${size.price.toFixed(2)}</Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text style={styles.singlePrice}>N${item.price.toFixed(2)}</Text>
+        )}
+        
         <Text style={styles.productDescription} numberOfLines={2}>
           {item.description}
         </Text>
@@ -60,8 +106,8 @@ const PDesign = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Medical Uniforms</Text>
-        <Text style={styles.subtitle}>Professional wear for healthcare workers</Text>
+        <Text style={styles.title}>Product Designs</Text>
+        <Text style={styles.subtitle}>Custom-made bags and accessories</Text>
       </View>
       
       <FlatList
@@ -74,7 +120,7 @@ const PDesign = ({ navigation }) => {
       <View style={styles.footer}>
         <Text style={styles.footerContact}>Contact Us:</Text>
         <Text style={styles.footerNumber}>+264 812200730</Text>
-        <Text style={styles.footerEmail}>charityfashioncc@gmail.com</Text>
+        <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
       </View>
     </View>
   );
@@ -90,12 +136,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
+    letterSpacing: 1,
   },
   subtitle: {
     fontSize: 14,
@@ -134,26 +186,46 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
+    marginBottom: 8,
+    textTransform: 'capitalize',
+  },
+  sizeContainer: {
+    marginBottom: 8,
+  },
+  sizeOption: {
+    flexDirection: 'row',
     marginBottom: 4,
   },
-  productPrice: {
+  sizeLabel: {
+    fontSize: 13,
+    color: '#666',
+    marginRight: 5,
+    width: 60,
+  },
+  sizePrice: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: '#ca9e07',
+  },
+  singlePrice: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#ca9e07', // Gold color
-    marginBottom: 4,
+    color: '#ca9e07',
+    marginBottom: 8,
   },
   productDescription: {
     fontSize: 13,
     color: '#666',
     lineHeight: 18,
+    fontStyle: 'italic',
   },
   viewDetailsButton: {
-    backgroundColor: '#f8e8b0', // Light gold background
+    backgroundColor: '#f8e8b0',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#ca9e07', // Gold border
+    borderColor: '#ca9e07',
   },
   viewDetailsText: {
     color: '#333',
@@ -168,11 +240,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    borderTopWidth: 2,
+    borderTopColor: '#ca9e07',
   },
   footerContact: {
-    color: '#ca9e07', // Gold color
+    color: '#ca9e07',
     fontSize: 14,
     marginBottom: 5,
+    fontWeight: 'bold',
   },
   footerNumber: {
     color: 'white',

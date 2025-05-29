@@ -2,37 +2,57 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 
 const Workwear = ({ navigation }) => {
-  // Medical uniform products data
-  const products = [
-    { 
-      id: 1, 
-      name: 'Medical Scrubs Set', 
-      price: 49.99, 
-      description: 'Professional medical scrubs with antimicrobial treatment. Comfortable stretch fabric with multiple pockets.',
-      image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&auto=format&fit=crop' 
-    },
-    { 
-      id: 2, 
-      name: 'Lab Coat', 
-      price: 59.99, 
-      description: 'White medical lab coat with premium fabric and multiple functional pockets.',
-      image: 'https://images.unsplash.com/photo-1581595219315-a187dd40c322?w=500&auto=format&fit=crop' 
-    },
-    { 
-      id: 3, 
-      name: 'Nursing Shoes', 
-      price: 79.99, 
-      description: 'Comfortable nursing shoes with slip-resistant soles for long shifts.',
-      image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop' 
-    },
-    { 
-      id: 4, 
-      name: 'Surgical Mask', 
-      price: 9.99, 
-      description: '3-ply disposable surgical masks, box of 50 pieces.',
-      image: 'https://images.unsplash.com/photo-1584634731339-252c58ab7454?w=500&auto=format&fit=crop' 
-    },
-  ];
+ const products = [
+  { 
+    id: 1, 
+    name: 'OVERALLS:', 
+    price: 435.84, 
+    description: 'Industrial-grade work overalls with reinforced stitching, made from durable poly-cotton blend that resists stains and tears. Ideal for construction and heavy labor.',
+    image: require('../../Assets/overall.png')
+  },
+  { 
+    id: 2, 
+    name: '6 Pockets with inserted reflectors and elastic', 
+    price: 500, 
+    description: 'Functional work pants featuring six strategically placed pockets, elastic waistband, and safety reflectors for high visibility in low-light conditions.',
+    image: require('../../Assets/6pok.png')
+  },
+  { 
+    id: 3, 
+    name: 'Security Uniform (Trousers, Shirt)', 
+    price: 1050.00, 
+    description: 'Professional security uniform set with moisture-wicking fabric, multiple utility pockets, and a polished look that commands authority while ensuring comfort.',
+    image: require('../../Assets/uni.png')
+  },
+  { 
+    id: 4, 
+    name: 'Fashion Overall',
+    price: 380, 
+    description: 'Stylish denim overall with contemporary fit, perfect for casual wear while maintaining functionality with multiple pockets.',
+    image: require('../../Assets/FO.png')
+  },
+  { 
+    id: 5, 
+    name: 'Sustainable Fashion upcycle dress',
+    price: 250, 
+    description: 'Eco-chic dress crafted from upcycled materials, combining sustainability with modern fashion trends for environmentally conscious consumers.',
+    image: require('../../Assets/FS.png')
+  },
+  { 
+    id: 6, 
+    name: 'Overall design bushwear',
+    price: 380, 
+    description: 'Rugged bushwear overalls designed for outdoor enthusiasts, featuring water-resistant fabric and ample storage for tools and gear.',
+    image: require('../../Assets/FB.png')
+  },
+  { 
+    id: 7, 
+    name: 'Costume Design',
+    price: 550, 
+    description: 'Custom costume designs for theatrical performances or special events, made with attention to detail and authentic materials.',
+    image: require('../../Assets/cus.png')
+  },
+];
 
   const renderProductItem = ({ item }) => (
     <TouchableOpacity 
@@ -40,7 +60,7 @@ const Workwear = ({ navigation }) => {
       onPress={() => navigation.navigate('ProductDetailScreen', { product: item })}
     >
       <Image 
-        source={{ uri: item.image }} 
+        source={item.image} 
         style={styles.productImage}
         resizeMode="cover"
       />
@@ -60,8 +80,8 @@ const Workwear = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Medical Uniforms</Text>
-        <Text style={styles.subtitle}>Professional wear for healthcare workers</Text>
+        <Text style={styles.title}> Protective Work Wear</Text>
+        <Text style={styles.subtitle}>Elegant Professional  wear of any type</Text>
       </View>
       
       <FlatList
@@ -74,7 +94,7 @@ const Workwear = ({ navigation }) => {
       <View style={styles.footer}>
         <Text style={styles.footerContact}>Contact Us:</Text>
         <Text style={styles.footerNumber}>+264 812200730</Text>
-        <Text style={styles.footerEmail}>charityfashioncc@gmail.com</Text>
+        <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
       </View>
     </View>
   );
@@ -139,7 +159,7 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#ca9e07', // Gold color
+    color: '#ca9e07',
     marginBottom: 4,
   },
   productDescription: {
@@ -148,12 +168,12 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   viewDetailsButton: {
-    backgroundColor: '#f8e8b0', // Light gold background
+    backgroundColor: '#f8e8b0',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: '#ca9e07', // Gold border
+    borderColor: '#ca9e07',
   },
   viewDetailsText: {
     color: '#333',
@@ -162,7 +182,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: '#333',
-    padding: 15,
+    padding: 10,
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
@@ -170,7 +190,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   footerContact: {
-    color: '#ca9e07', // Gold color
+    color: '#ca9e07',
     fontSize: 14,
     marginBottom: 5,
   },

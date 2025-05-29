@@ -11,6 +11,7 @@ import ProductDetailScreen from '../Screens/Categories/ProductDetailScreen'
 import Medical from '../Screens/Categories/Medical'
 import PDesign from '../Screens/Categories/PDesign'
 import Workwear from '../Screens/Categories/Workwear'
+import AccDetailsScreen from '../Screens/Categories/AccDetailsScreen'
 const Stack = createNativeStackNavigator();
 
 const StackCom = () => {
@@ -58,9 +59,15 @@ const StackCom = () => {
           component={Workwear} 
          
         />
+         
          <Stack.Screen 
           name="ProductDetailScreen" 
           component={ProductDetailScreen} 
+  
+        />
+         <Stack.Screen 
+          name="AccDetailsScreen" 
+          component={AccDetailsScreen} 
   
         />
       </Stack.Navigator>

@@ -82,8 +82,8 @@ android {
         applicationId "com.charityfashion"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
     }
     signingConfigs {
         debug {
@@ -92,16 +92,21 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('CFAshion-release.keystore')  // Create this file
+            storePassword 'CFashion'
+            keyAlias 'CFAshion-key'
+            keyPassword 'CFashion'
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            signingConfig signingConfigs.release  // Use release signing config
+            minifyEnabled true  // Enable minification
+            shrinkResources true  // Enable resource shrinking
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }

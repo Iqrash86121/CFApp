@@ -7,26 +7,23 @@ const CoursesScreen = () => {
   const [courses] = useState([
     { 
       id: 1, 
-      name: 'Fashion Design Fundamentals', 
-      price: 299.99, 
-      duration: '8 weeks',
-      description: 'Learn the basics of fashion design, pattern making, and garment construction.',
+      name: 'Free hand sewing and Cutting Techniques ', 
+      price: 850, 
+      description: 'Learn how to sew African print Shopping bags, matching bonnets and other accessories',
       image: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=500&auto=format&fit=crop' 
     },
     { 
       id: 2, 
-      name: 'Advanced Tailoring Techniques', 
-      price: 399.99, 
-      duration: '12 weeks',
-      description: 'Master advanced tailoring methods for professional garment production.',
+      name: 'Pattern and Garment construction', 
+      price: 1500, 
+      description: 'Development and style your own patterns and contract a garment.',
       image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500&auto=format&fit=crop' 
     },
     { 
       id: 3, 
-      name: 'Textile Innovation & Sustainability', 
-      price: 349.99, 
-      duration: '10 weeks',
-      description: 'Explore sustainable materials and innovative textile technologies.',
+      name: 'Modern Sewing Techniques', 
+      price: 2500, 
+      description: 'Select your own project you want us to work with you, own collections and build your unique style.',
       image: 'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=500&auto=format&fit=crop' 
     },
   ]);
@@ -44,12 +41,11 @@ const CoursesScreen = () => {
     }
 
     const course = courses.find(c => c.id === selectedCourse);
-    const recipient = 'iqrashali35402@gmail.com';
+    const recipient = 'charityfashionsales@gmail.com';
     const subject = `Inquiry About ${course.name} Course`;
     const body = `Dear Charity Fashion,\n\nI am interested in the following course:\n\n` +
                  `• Course Name: ${course.name}\n` +
                  `• Price: $${course.price.toFixed(2)}\n` +
-                 `• Duration: ${course.duration}\n` +
                  `• Description: ${course.description}\n\n` +
                  `Please provide me with more information about enrollment.\n\n` +
                  `Best regards,\n[Your Name]`;
@@ -92,7 +88,7 @@ const CoursesScreen = () => {
           source={require('../Assets/Logo.png')}
           style={styles.logo}
         />
-        <Text style={styles.companyName}>Charity Fashion</Text>
+        <Text style={styles.companyName}>CFASHION.NA</Text>
       </View>
 
       <Text style={styles.title}>Available Courses</Text>
