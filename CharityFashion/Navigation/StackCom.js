@@ -7,7 +7,7 @@ import HomeScreen from '../Screens/HomeScreen';
 import Splash from '../Screens/Splash';
 import CoursesScreen from '../Screens/Courses';
 import OutfitsCategories from '../Screens/OutfitsCategories'
-import Personal from '../Screens/Categories/Personal'
+import ProductDetailScreen from '../Screens/Categories/ProductDetailScreen'
 import Medical from '../Screens/Categories/Medical'
 import PDesign from '../Screens/Categories/PDesign'
 import Workwear from '../Screens/Categories/Workwear'
@@ -42,11 +42,7 @@ const StackCom = () => {
           component={CoursesScreen} 
   
         />
-         <Stack.Screen 
-          name="Personal" 
-          component={Personal} 
-  
-        />
+        
          <Stack.Screen 
           name="Medical" 
           component={Medical} 
@@ -61,6 +57,11 @@ const StackCom = () => {
           name="Workwear" 
           component={Workwear} 
          
+        />
+         <Stack.Screen 
+          name="ProductDetailScreen" 
+          component={ProductDetailScreen} 
+  
         />
       </Stack.Navigator>
     </NavigationContainer>

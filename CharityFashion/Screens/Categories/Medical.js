@@ -1,125 +1,43 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Image, Linking } from 'react-native';
-import { Checkbox } from 'react-native-paper';
-import Email from 'react-native-email';
+import React from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 
-const Medical = () => {
-  // Sample product data with images
-  const [products, setProducts] = useState([
+const Medical = ({ navigation }) => {
+  // Medical uniform products data
+  const products = [
     { 
       id: 1, 
-      name: 'SuitFlight', 
-      price: 199.99, 
-      description: 'Noise-cancelling wireless headphones with 30hr battery',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop' 
+      name: 'Medical Scrubs Set', 
+      price: 49.99, 
+      description: 'Professional medical scrubs with antimicrobial treatment. Comfortable stretch fabric with multiple pockets.',
+      image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=500&auto=format&fit=crop' 
     },
     { 
       id: 2, 
-      name: 'GOLF T-SHIRTS', 
-      price: 199.99, 
-      description: 'Noise-cancelling wireless headphones with 30hr battery',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop' 
+      name: 'Lab Coat', 
+      price: 59.99, 
+      description: 'White medical lab coat with premium fabric and multiple functional pockets.',
+      image: 'https://images.unsplash.com/photo-1581595219315-a187dd40c322?w=500&auto=format&fit=crop' 
     },
     { 
       id: 3, 
-      name: 'Scrubs (TOP AND TROUSER)', 
-      price: 199.99, 
-      description: 'Noise-cancelling wireless headphones with 30hr battery',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop' 
+      name: 'Nursing Shoes', 
+      price: 79.99, 
+      description: 'Comfortable nursing shoes with slip-resistant soles for long shifts.',
+      image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop' 
     },
     { 
       id: 4, 
-      name: '5 pockets trousers', 
-      price: 199.99, 
-      description: 'Noise-cancelling wireless headphones with 30hr battery',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop' 
+      name: 'Surgical Mask', 
+      price: 9.99, 
+      description: '3-ply disposable surgical masks, box of 50 pieces.',
+      image: 'https://images.unsplash.com/photo-1584634731339-252c58ab7454?w=500&auto=format&fit=crop' 
     },
-  ]);
+  ];
 
-  // State to track selected products
-  const [selectedProducts, setSelectedProducts] = useState([]);
-
-  // Toggle product selection (unchanged)
-  const toggleProductSelection = (productId) => {
-    setSelectedProducts(prev => {
-      if (prev.includes(productId)) {
-        return prev.filter(id => id !== productId);
-      } else {
-        return [...prev, productId];
-      }
-    });
-  };
-
-  // Format selected products for email (unchanged)
-  const formatProductsForEmail = () => {
-    let emailBody = "Selected Products:\n\n";
-    
-    selectedProducts.forEach(id => {
-      const product = products.find(p => p.id === id);
-      if (product) {
-        emailBody += `Name: ${product.name}\n`;
-        emailBody += `Price: $${product.price}\n`;
-        emailBody += `Description: ${product.description}\n\n`;
-      }
-    });
-    
-    emailBody += `Total Items: ${selectedProducts.length}\n`;
-    const totalPrice = selectedProducts.reduce((sum, id) => {
-      const product = products.find(p => p.id === id);
-      return sum + (product ? product.price : 0);
-    }, 0);
-    emailBody += `Total Price: $${totalPrice.toFixed(2)}`;
-    
-    return emailBody;
-  };
-
-  // Fallback using mailto: URL
-  const sendWithMailto = (emailBody) => {
-    const subject = 'Selected Products Information';
-    const recipient = 'iqrashali86121@gmail.com';
-    const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
-    
-    Linking.openURL(mailtoUrl).catch(() => {
-      Alert.alert('Error', 'No email clients available');
-    });
-  };
-
-  // Updated email sending function with better error handling
-  const sendProductsByEmail = async () => {
-    if (selectedProducts.length === 0) {
-      Alert.alert('No Selection', 'Please select at least one product');
-      return;
-    }
-
-    try {
-      const emailBody = formatProductsForEmail();
-      
-      // First try react-native-email
-      if (Email && typeof Email.email === 'function') {
-        await Email.email({
-          subject: 'Selected Products Information',
-          body: emailBody,
-          to: ['iqrashali86121@gmail.com'],
-        });
-      } else {
-        // Fallback to mailto if Email module not available
-        sendWithMailto(emailBody);
-      }
-    } catch (error) {
-      console.error('Email error:', error);
-      // Fallback to mailto if react-native-email fails
-      sendWithMailto(formatProductsForEmail());
-    }
-  };
-
-  // Render each product item (unchanged)
   const renderProductItem = ({ item }) => (
     <TouchableOpacity 
-      style={[
-        styles.productItem,
-        selectedProducts.includes(item.id) && styles.selectedProduct
-      ]}
-      onPress={() => toggleProductSelection(item.id)}
+      style={styles.productItem}
+      onPress={() => navigation.navigate('ProductDetailScreen', { product: item })}
     >
       <Image 
         source={{ uri: item.image }} 
@@ -128,46 +46,37 @@ const Medical = () => {
       />
       <View style={styles.productInfo}>
         <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
-        <Text style={styles.productDescription}>{item.description}</Text>
+        <Text style={styles.productPrice}>N${item.price.toFixed(2)}</Text>
+        <Text style={styles.productDescription} numberOfLines={2}>
+          {item.description}
+        </Text>
       </View>
-      <Checkbox
-        status={selectedProducts.includes(item.id) ? 'checked' : 'unchecked'}
-        onPress={() => toggleProductSelection(item.id)}
-        color="#6200ee"
-      />
+      <View style={styles.viewDetailsButton}>
+        <Text style={styles.viewDetailsText}>View</Text>
+      </View>
     </TouchableOpacity>
   );
 
-  // The rest of your component remains exactly the same
   return (
     <View style={styles.container}>
-    <Text style={styles.header}>Select Products</Text>
-    
-    <FlatList
-      data={products}
-      renderItem={renderProductItem}
-      keyExtractor={item => item.id.toString()}
-      contentContainerStyle={styles.listContent}
-    />
-    
-    <View style={styles.footer}>
-      <Text style={styles.selectionCount}>
-        {selectedProducts.length} product(s) selected
-      </Text>
-      <TouchableOpacity
-        style={[
-          styles.emailButton,
-          selectedProducts.length === 0 && styles.disabledButton
-        ]}
-        onPress={sendProductsByEmail}
-        disabled={selectedProducts.length === 0}
-      >
-        <Text style={styles.emailButtonText}>Send Selected Products via Email</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
+      <View style={styles.header}>
+        <Text style={styles.title}>Medical Uniforms</Text>
+        <Text style={styles.subtitle}>Professional wear for healthcare workers</Text>
+      </View>
+      
+      <FlatList
+        data={products}
+        renderItem={renderProductItem}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.listContent}
+      />
 
+      <View style={styles.footer}>
+        <Text style={styles.footerContact}>Contact Us:</Text>
+        <Text style={styles.footerNumber}>+264 812200730</Text>
+        <Text style={styles.footerEmail}>charityfashioncc@gmail.com</Text>
+      </View>
+    </View>
   );
 };
 
@@ -175,41 +84,51 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    padding: 16,
   },
   header: {
+    padding: 15,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
     color: '#333',
     textAlign: 'center',
   },
+  subtitle: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 5,
+  },
   listContent: {
+    padding: 15,
     paddingBottom: 80,
   },
   productItem: {
     backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 12,
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    elevation: 2,
-  },
-  selectedProduct: {
-    borderColor: '#6200ee',
-    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   productImage: {
-    width: 150,
-    height: 150,
+    width: 70,
+    height: 70,
     borderRadius: 8,
-    marginRight: 12,
+    marginRight: 15,
   },
   productInfo: {
     flex: 1,
-    marginRight: 12,
+    marginRight: 10,
   },
   productName: {
     fontSize: 16,
@@ -220,42 +139,49 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#6200ee',
+    color: '#ca9e07', // Gold color
     marginBottom: 4,
   },
   productDescription: {
     fontSize: 13,
     color: '#666',
+    lineHeight: 18,
+  },
+  viewDetailsButton: {
+    backgroundColor: '#f8e8b0', // Light gold background
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#ca9e07', // Gold border
+  },
+  viewDetailsText: {
+    color: '#333',
+    fontSize: 14,
+    fontWeight: '500',
   },
   footer: {
+    backgroundColor: '#333',
+    padding: 15,
+    alignItems: 'center',
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'white',
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
   },
-  selectionCount: {
-    textAlign: 'center',
-    marginBottom: 12,
-    fontSize: 16,
-    color: '#333',
+  footerContact: {
+    color: '#ca9e07', // Gold color
+    fontSize: 14,
+    marginBottom: 5,
   },
-  emailButton: {
-    backgroundColor: '#6200ee',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  disabledButton: {
-    backgroundColor: '#cccccc',
-  },
-  emailButtonText: {
+  footerNumber: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  footerEmail: {
+    color: 'white',
+    fontSize: 14,
   },
 });
 

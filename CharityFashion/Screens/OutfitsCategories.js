@@ -6,7 +6,6 @@ const OutfitsCategories = () => {
   const navigation = useNavigation();
 
   const categories = [
-    { id: 1, name: 'Personal Protective wear and Work Wear', screen: 'Personal' },
     { id: 2, name: 'MEDICAL UNIFORMS', screen: 'Medical' },
     { id: 3, name: 'WORK WEAR', screen: 'Workwear' },
     { id: 4, name: 'Product Design', screen: 'PDesign' },
@@ -28,6 +27,7 @@ const OutfitsCategories = () => {
       
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Text style={styles.title}>Order by Category</Text>
+        <Text style={styles.title}>O Personal Protective wear and Work Wear</Text>
         <View style={styles.categoriesContainer}>
           {categories.map((category) => (
             <TouchableOpacity
