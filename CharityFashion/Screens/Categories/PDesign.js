@@ -23,9 +23,9 @@ const PDesign = ({ navigation }) => {
       id: 3, 
       name: 'Tote Bag', 
       sizes: [
-        { size: 'Large', price: 380 },
-        { size: 'Medium', price: 250 },
-        { size: 'Mini', price: 180 }
+        { size: 'Large', price: 250 },
+        { size: 'Medium', price: 180 },
+        { size: 'Mini', price: 120 }
       ],
       description: 'Stylish and durable tote bag made from high-quality materials. Available in three sizes to suit different needs.',
       image: require('../../Assets/p2.png'),
@@ -44,9 +44,9 @@ const PDesign = ({ navigation }) => {
       id: 5, 
       name: 'Accessories Shopping Bag', 
        sizes: [
-        { size: 'Large', price: 380 },
-        { size: 'Medium', price: 250 },
-        { size: 'Mini', price: 180 }
+         { size: 'Large', price: 250 },
+        { size: 'Medium', price: 180 },
+        { size: 'Mini', price: 120 }
       ],
       description: 'Fashionable shopping bag with accessory compartments. Three sizes available for different shopping needs.',
       image: require('../../Assets/bag.png'),
@@ -56,9 +56,9 @@ const PDesign = ({ navigation }) => {
       id: 6, 
       name: 'Elegant Evening Bag', 
      sizes: [
-        { size: 'Large', price: 380 },
-        { size: 'Medium', price: 250 },
-        { size: 'Mini', price: 180 }
+        { size: 'Large', price: 250 },
+        { size: 'Medium', price: 180 },
+        { size: 'Mini', price: 120 }
       ],
       description: 'Chic evening bag for special occasions. Available in medium and mini sizes.',
       image: require('../../Assets/p3.png'),

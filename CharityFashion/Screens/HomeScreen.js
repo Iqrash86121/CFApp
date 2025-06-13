@@ -39,7 +39,7 @@ export default function HomeScreen({ navigation }) {
       {/* Footer with Company Details */}
       <View style={styles.footer}>
         <Text style={styles.footerTitle}>CHARITY FASHION</Text>
-        <Text style={styles.footerText}>P.o box 2888 ,Smarties, Okahandja</Text>
+        <Text style={styles.footerText}>Martin Neib Ave. Shop 12 Okahandja, Namibia</Text>
         <Text style={styles.footerContact}>Contact Us:</Text>
         <Text style={styles.footerNumber}>+264 812200730</Text>
         <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
