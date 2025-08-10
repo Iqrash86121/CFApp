@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TextInput, TouchableOpacity, Alert, Linking, Clipboard } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TextInput, TouchableOpacity, Alert, Linking, Clipboard, SafeAreaView } from 'react-native';
 import { openComposer } from 'react-native-email-link';
 
 const AccDetailsScreen = ({ route }) => {
@@ -76,148 +76,154 @@ const AccDetailsScreen = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image 
-          source={require('../../Assets/Logo.png')}
-          style={styles.logo}
-        />
-        <Text style={styles.companyName}>CFASHION.NA</Text>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image 
+            source={require('../../Assets/Logo.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.companyName}>CFASHION.NA</Text>
+        </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Image
-          source={product.image}
-          style={styles.productImage}
-          resizeMode="cover"
-        />
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <Image
+            source={product.image}
+            style={styles.productImage}
+            resizeMode="cover"
+          />
 
-        <View style={styles.detailsContainer}>
-          <Text style={styles.productName}>{product.name}</Text>
-          
-          {product.sizes ? (
-            <View>
-              <Text style={styles.priceLabel}>Available Sizes:</Text>
-              <View style={styles.sizeOptionsContainer}>
-                {product.sizes.map((size, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={[
-                      styles.sizeOption,
-                      selectedSize.size === size.size && styles.selectedSizeOption
-                    ]}
-                    onPress={() => handleSizeSelection(size)}
-                  >
-                    <Text style={[
-                      styles.sizeOptionText,
-                      selectedSize.size === size.size && styles.selectedSizeOptionText
-                    ]}>
-                      {size.size}
-                    </Text>
-                    <Text style={styles.sizePrice}>N${size.price.toFixed(2)}</Text>
-                  </TouchableOpacity>
-                ))}
+          <View style={styles.detailsContainer}>
+            <Text style={styles.productName}>{product.name}</Text>
+            
+            {product.sizes ? (
+              <View>
+                <Text style={styles.priceLabel}>Available Sizes:</Text>
+                <View style={styles.sizeOptionsContainer}>
+                  {product.sizes.map((size, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={[
+                        styles.sizeOption,
+                        selectedSize.size === size.size && styles.selectedSizeOption
+                      ]}
+                      onPress={() => handleSizeSelection(size)}
+                    >
+                      <Text style={[
+                        styles.sizeOptionText,
+                        selectedSize.size === size.size && styles.selectedSizeOptionText
+                      ]}>
+                        {size.size}
+                      </Text>
+                      <Text style={styles.sizePrice}>N${size.price.toFixed(2)}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                <Text style={styles.currentPrice}>
+                  Price: N${selectedSize.price.toFixed(2)}
+                </Text>
               </View>
-              <Text style={styles.currentPrice}>
-                Price: N${selectedSize.price.toFixed(2)}
-              </Text>
+            ) : (
+              <Text style={styles.productPrice}>N${product.price.toFixed(2)}</Text>
+            )}
+            
+            <Text style={styles.descriptionTitle}>Product Description:</Text>
+            <Text style={styles.productDescription}>{product.description}</Text>
+          </View>
+
+          <View style={styles.formContainer}>
+            <Text style={styles.formTitle}>Order Details</Text>
+            <Text style={styles.formSubtitle}>Please provide your order information</Text>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Full Name *</Text>
+              <TextInput
+                style={styles.input}
+                value={orderDetails.fullName}
+                onChangeText={(text) => handleInputChange('fullName', text)}
+                placeholder="Your full name"
+              />
             </View>
-          ) : (
-            <Text style={styles.productPrice}>N${product.price.toFixed(2)}</Text>
-          )}
-          
-          <Text style={styles.descriptionTitle}>Product Description:</Text>
-          <Text style={styles.productDescription}>{product.description}</Text>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Contact Number *</Text>
+              <TextInput
+                style={styles.input}
+                value={orderDetails.contactNumber}
+                onChangeText={(text) => handleInputChange('contactNumber', text)}
+                placeholder="+264"
+                keyboardType="phone-pad"
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Email</Text>
+              <TextInput
+                style={styles.input}
+                value={orderDetails.email}
+                onChangeText={(text) => handleInputChange('email', text)}
+                placeholder="your@email.com"
+                keyboardType="email-address"
+              />
+            </View>
+
+            <Text style={styles.sectionTitle}>Product Customization</Text>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Quantity *</Text>
+              <TextInput
+                style={styles.input}
+                value={orderDetails.quantity}
+                onChangeText={(text) => handleInputChange('quantity', text)}
+                placeholder="How many items?"
+                keyboardType="numeric"
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Color Preference</Text>
+              <TextInput
+                style={styles.input}
+                value={orderDetails.color}
+                onChangeText={(text) => handleInputChange('color', text)}
+                placeholder="Preferred color (optional)"
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.inputLabel}>Special Instructions</Text>
+              <TextInput
+                style={[styles.input, { height: 80 }]}
+                value={orderDetails.specialInstructions}
+                onChangeText={(text) => handleInputChange('specialInstructions', text)}
+                placeholder="Any special requests or instructions"
+                multiline
+              />
+            </View>
+
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={sendOrderEmail}
+            >
+              <Text style={styles.submitButtonText}>Place Order</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerContact}>Need help with your order?</Text>
+          <Text style={styles.footerNumber}>Call us: +264 812200730</Text>
         </View>
-
-        <View style={styles.formContainer}>
-          <Text style={styles.formTitle}>Order Details</Text>
-          <Text style={styles.formSubtitle}>Please provide your order information</Text>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Full Name *</Text>
-            <TextInput
-              style={styles.input}
-              value={orderDetails.fullName}
-              onChangeText={(text) => handleInputChange('fullName', text)}
-              placeholder="Your full name"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Contact Number *</Text>
-            <TextInput
-              style={styles.input}
-              value={orderDetails.contactNumber}
-              onChangeText={(text) => handleInputChange('contactNumber', text)}
-              placeholder="+264"
-              keyboardType="phone-pad"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={orderDetails.email}
-              onChangeText={(text) => handleInputChange('email', text)}
-              placeholder="your@email.com"
-              keyboardType="email-address"
-            />
-          </View>
-
-          <Text style={styles.sectionTitle}>Product Customization</Text>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Quantity *</Text>
-            <TextInput
-              style={styles.input}
-              value={orderDetails.quantity}
-              onChangeText={(text) => handleInputChange('quantity', text)}
-              placeholder="How many items?"
-              keyboardType="numeric"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Color Preference</Text>
-            <TextInput
-              style={styles.input}
-              value={orderDetails.color}
-              onChangeText={(text) => handleInputChange('color', text)}
-              placeholder="Preferred color (optional)"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Special Instructions</Text>
-            <TextInput
-              style={[styles.input, { height: 80 }]}
-              value={orderDetails.specialInstructions}
-              onChangeText={(text) => handleInputChange('specialInstructions', text)}
-              placeholder="Any special requests or instructions"
-              multiline
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.submitButton}
-            onPress={sendOrderEmail}
-          >
-            <Text style={styles.submitButtonText}>Place Order</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerContact}>Need help with your order?</Text>
-        <Text style={styles.footerNumber}>Call us: +264 812200730</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',

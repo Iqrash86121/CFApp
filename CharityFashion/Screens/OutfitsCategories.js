@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const OutfitsCategories = () => {
@@ -18,62 +18,68 @@ const OutfitsCategories = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image 
-          source={require('../Assets/Logo.png')}
-          style={styles.logo}
-        />
-        <Text style={styles.companyName}>CFASHION.NA</Text>
-      </View>
-      
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.heroSection}>
-          <Text style={styles.mainTitle}>ORDER BY CATEGORY</Text>
-          <Text style={styles.subTitle}>Personal Protective Wear & Work Wear</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image 
+            source={require('../Assets/Logo.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.companyName}>CFASHION.NA</Text>
         </View>
+        
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.heroSection}>
+            <Text style={styles.mainTitle}>ORDER BY CATEGORY</Text>
+            <Text style={styles.subTitle}>Personal Protective Wear & Work Wear</Text>
+          </View>
 
-        <View style={styles.noteContainer}>
-          <Text style={styles.noteText}>
-            Every item can be customized to your preferred color, size, and design.
-          </Text>
-          <Text style={styles.productionNote}>
-            Production time: Typically 7 days (may vary based on quantity and complexity)
-          </Text>
-        </View>
-       
-        <View style={styles.categoriesContainer}>
-          {categories.map((category) => (
-            <TouchableOpacity
-              key={category.id}
-              style={[
-                styles.categoryButton,
-                activeButton === category.id && styles.activeButton
-              ]}
-              onPress={() => handleCategoryPress(category.screen, category.id)}
-              activeOpacity={0.7}
-            >
-              <Text style={[
-                styles.categoryText,
-                activeButton === category.id && styles.activeButtonText
-              ]}>
-                {category.name}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+          <View style={styles.noteContainer}>
+            <Text style={styles.noteText}>
+              Every item can be customized to your preferred color, size, and design.
+            </Text>
+            <Text style={styles.productionNote}>
+              Production time: Typically 7 days (may vary based on quantity and complexity)
+            </Text>
+          </View>
+        
+          <View style={styles.categoriesContainer}>
+            {categories.map((category) => (
+              <TouchableOpacity
+                key={category.id}
+                style={[
+                  styles.categoryButton,
+                  activeButton === category.id && styles.activeButton
+                ]}
+                onPress={() => handleCategoryPress(category.screen, category.id)}
+                activeOpacity={0.7}
+              >
+                <Text style={[
+                  styles.categoryText,
+                  activeButton === category.id && styles.activeButtonText
+                ]}>
+                  {category.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerContact}>CONTACT US:</Text>
-        <Text style={styles.footerNumber}>+264 812200730</Text>
-        <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
+        <View style={styles.footer}>
+          <Text style={styles.footerContact}>CONTACT US:</Text>
+          <Text style={styles.footerNumber}>+264 812200730</Text>
+          <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',

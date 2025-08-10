@@ -1,54 +1,60 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native'
 import React from 'react'
 import ImageSlider from '../Components/ImageSlider'
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      {/* Header with Logo and Company Name */}
-      <View style={styles.header}>
-        <Image 
-          source={require('../Assets/Logo.png')} // Replace with your actual logo path
-          style={styles.logo}
-        />
-        <Text style={styles.companyName}>CFASHION.NA</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* Header with Logo and Company Name */}
+        <View style={styles.header}>
+          <Image 
+            source={require('../Assets/Logo.png')} // Replace with your actual logo path
+            style={styles.logo}
+          />
+          <Text style={styles.companyName}>CFASHION.NA</Text>
+        </View>
+
+        {/* Image Slider */}
+        <ImageSlider/>
+
+        {/* Buttons */}
+        <View style={styles.buttonWrapper}>
+          <TouchableOpacity 
+            style={[styles.button, styles.productsButton]}
+            onPress={() => navigation.navigate('OutfitsCategories')}
+          >
+            <Text style={styles.buttonText}>Fashion Design and Accessories</Text>
+          </TouchableOpacity>
+
+          <View style={styles.buttonSpacer} />
+
+          <TouchableOpacity 
+            style={[styles.button, styles.coursesButton]}
+            onPress={() => navigation.navigate('Courses')}
+          >
+            <Text style={styles.buttonText}>Training and Development</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Footer with Company Details */}
+        <View style={styles.footer}>
+          <Text style={styles.footerTitle}>CHARITY FASHION</Text>
+          <Text style={styles.footerText}>Martin Neib Ave. Shop 12 Okahandja, Namibia</Text>
+          <Text style={styles.footerContact}>Contact Us:</Text>
+          <Text style={styles.footerNumber}>+264 812200730</Text>
+          <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
+        </View>
       </View>
-
-      {/* Image Slider */}
-      <ImageSlider/>
-
-      {/* Buttons */}
-      <View style={styles.buttonWrapper}>
-        <TouchableOpacity 
-          style={[styles.button, styles.productsButton]}
-          onPress={() => navigation.navigate('OutfitsCategories')}
-        >
-          <Text style={styles.buttonText}>Fashion Design and Accessories</Text>
-        </TouchableOpacity>
-
-        <View style={styles.buttonSpacer} />
-
-        <TouchableOpacity 
-          style={[styles.button, styles.coursesButton]}
-          onPress={() => navigation.navigate('Courses')}
-        >
-          <Text style={styles.buttonText}>Training and Development</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Footer with Company Details */}
-      <View style={styles.footer}>
-        <Text style={styles.footerTitle}>CHARITY FASHION</Text>
-        <Text style={styles.footerText}>Martin Neib Ave. Shop 12 Okahandja, Namibia</Text>
-        <Text style={styles.footerContact}>Contact Us:</Text>
-        <Text style={styles.footerNumber}>+264 812200730</Text>
-        <Text style={styles.footerEmail}>charityfashionsales@gmail.com</Text>
-      </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',

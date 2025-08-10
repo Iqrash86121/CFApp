@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView, Linking, Clipboard } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView, Linking, Clipboard, SafeAreaView } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { openComposer } from 'react-native-email-link';
 
@@ -51,7 +51,6 @@ const CoursesScreen = () => {
                  `Best regards,\n[Your Name]`;
 
     try {
-      // First try react-native-email-link
       await openComposer({
         to: recipient,
         subject: subject,
@@ -60,14 +59,12 @@ const CoursesScreen = () => {
     } catch (error) {
       console.log('Email error:', error);
       
-      // Fallback to mailto link
       try {
         const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         await Linking.openURL(mailtoUrl);
       } catch (mailtoError) {
         console.log('Mailto error:', mailtoError);
         
-        // Final fallback - copy to clipboard
         Clipboard.setString(`To: ${recipient}\nSubject: ${subject}\n\n${body}`);
         Alert.alert(
           'Email Not Configured',
@@ -82,65 +79,73 @@ const CoursesScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image 
-          source={require('../Assets/Logo.png')}
-          style={styles.logo}
-        />
-        <Text style={styles.companyName}>CFASHION.NA</Text>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image 
+            source={require('../Assets/Logo.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.companyName}>CFASHION.NA</Text>
+        </View>
 
-      <Text style={styles.title}>Available Courses</Text>
+        <Text style={styles.title}>Available Courses</Text>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {courses.map(course => (
+        <View style={styles.scrollContainer}>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            {courses.map(course => (
+              <TouchableOpacity
+                key={course.id}
+                style={[
+                  styles.courseItem,
+                  selectedCourse === course.id && styles.selectedCourse
+                ]}
+                onPress={() => toggleCourseSelection(course.id)}
+              >
+                <Image 
+                  source={{ uri: course.image }} 
+                  style={styles.courseImage}
+                />
+                <View style={styles.courseDetails}>
+                  <Text style={styles.courseName}>{course.name}</Text>
+                  <Text style={styles.coursePrice}>${course.price.toFixed(2)}</Text>
+                  <Text style={styles.courseDuration}>{course.duration}</Text>
+                  <Text style={styles.courseDescription}>{course.description}</Text>
+                </View>
+                <Checkbox
+                  status={selectedCourse === course.id ? 'checked' : 'unchecked'}
+                  color="#ca9e07"
+                />
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.selectionText}>
+            {selectedCourse ? "1 course selected" : "Select a course"}
+          </Text>
           <TouchableOpacity
-            key={course.id}
             style={[
-              styles.courseItem,
-              selectedCourse === course.id && styles.selectedCourse
+              styles.emailButton,
+              !selectedCourse && styles.disabledButton
             ]}
-            onPress={() => toggleCourseSelection(course.id)}
+            onPress={sendCourseInquiry}
+            disabled={!selectedCourse}
           >
-            <Image 
-              source={{ uri: course.image }} 
-              style={styles.courseImage}
-            />
-            <View style={styles.courseDetails}>
-              <Text style={styles.courseName}>{course.name}</Text>
-              <Text style={styles.coursePrice}>${course.price.toFixed(2)}</Text>
-              <Text style={styles.courseDuration}>{course.duration}</Text>
-              <Text style={styles.courseDescription}>{course.description}</Text>
-            </View>
-            <Checkbox
-              status={selectedCourse === course.id ? 'checked' : 'unchecked'}
-              color="#ca9e07"
-            />
+            <Text style={styles.emailButtonText}>Send Inquiry</Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <Text style={styles.selectionText}>
-          {selectedCourse ? "1 course selected" : "Select a course"}
-        </Text>
-        <TouchableOpacity
-          style={[
-            styles.emailButton,
-            !selectedCourse && styles.disabledButton
-          ]}
-          onPress={sendCourseInquiry}
-          disabled={!selectedCourse}
-        >
-          <Text style={styles.emailButtonText}>Send Inquiry</Text>
-        </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -171,8 +176,12 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     color: '#333',
   },
+  scrollContainer: {
+    flex: 1,
+    marginBottom: 90, // Adjust this value based on your tab bar height
+  },
   scrollContent: {
-    paddingBottom: 120,
+    paddingBottom: 20,
     paddingHorizontal: 15,
   },
   courseItem: {
@@ -219,10 +228,6 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     backgroundColor: '#333',
     padding: 15,
     alignItems: 'center',
